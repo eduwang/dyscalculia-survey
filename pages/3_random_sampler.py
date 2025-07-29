@@ -57,10 +57,21 @@ if st.button("표본 추출하기"):
     if sampled_total.empty:
         st.warning("조건을 만족하는 표본이 없습니다.")
     else:
+
         sampled_total_view = sampled_total[[
             '학교급', '학교명', '설립구분', '학생수', '특수학생수', '학급당학생수'
         ]]
         st.dataframe(sampled_total_view)
+        # 📊 추출된 표본의 학교급별 평균 학생 수
+        st.subheader("📈 표본 학교의 평균 학생 수 (학교급별)")
+
+        for level in ["초", "중", "고"]:
+            df_sub = sampled_total[sampled_total["학교급"] == level]
+            if not df_sub.empty:
+                mean_students = round(df_sub["학생수"].mean(), 1)
+                st.write(f"- {level}: {mean_students}명")
+            else:
+                st.write(f"- {level}: 표본 없음")
 
         # 📥 CSV 다운로드
         csv = sampled_total_view.to_csv(index=False).encode('utf-8-sig')
