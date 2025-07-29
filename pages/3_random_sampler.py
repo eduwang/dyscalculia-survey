@@ -69,7 +69,8 @@ if st.button("표본 추출하기"):
             df_sub = sampled_total[sampled_total["학교급"] == level]
             if not df_sub.empty:
                 mean_students = round(df_sub["학생수"].mean(), 1)
-                st.write(f"- {level}: {mean_students}명")
+                num_schools = len(df_sub)
+                st.write(f"- {level}: {mean_students}명 ({num_schools}개교)")
             else:
                 st.write(f"- {level}: 표본 없음")
 
