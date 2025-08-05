@@ -63,5 +63,24 @@ if os.path.exists(file_path):
     fig2.update_layout(bargap=0.1)
     st.plotly_chart(fig2, use_container_width=True)
 
+
+    # 📊 히스토그램 3: 지역별 학교 수 분포 (Plotly)
+    st.subheader("🏫 지역별 학교 수 분포")
+    # 지역별 학교 개수를 집계
+    region_counts = df_result['지역'].value_counts().reset_index()
+    region_counts.columns = ['지역', '학교수']
+
+    fig3 = px.bar(
+        region_counts,
+        x="지역",
+        y="학교수",
+        labels={"학교수": "학교 수", "지역": "지역"},
+        title="지역별 학교 수 분포",
+        text="학교수",  # 막대 위에 숫자 표시
+    )
+    fig3.update_layout(xaxis_tickangle=-45)
+    st.plotly_chart(fig3, use_container_width=True)
+
+
 else:
     st.error(f"{file_path} 파일을 찾을 수 없습니다.")
